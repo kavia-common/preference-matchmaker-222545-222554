@@ -49,6 +49,15 @@ Optional: Convert LCOV to HTML locally (requires genhtml):
 - genhtml coverage/lcov.info -o coverage/html
 - open coverage/html/index.html
 
+### Navigation Tests
+- Location: test/navigation/
+- These tests validate:
+  - Navigator.push/pop flows with a dummy second screen
+  - Named route navigation via a local routes map scaffold
+  - Back button behavior (using escape key event in tests)
+- Run only navigation tests:
+  - flutter test test/navigation/
+
 ## CI Guidance (optional)
 
 If CI is present, run:
