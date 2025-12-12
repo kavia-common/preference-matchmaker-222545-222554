@@ -33,18 +33,23 @@ class _TestSecondScreen extends StatelessWidget {
 void main() {
   group('Navigation - imperative push/pop', () {
     testWidgets('Navigator.push to a new screen and pop with result', (tester) async {
-      // Start the real app entrypoint.
-      await tester.pumpWidget(const MyApp());
-      await tester.pumpAndSettle();
+      // Start the real app entrypoint, but disable tickers on home to avoid infinite settle due to progress indicator.
+      await tester.pumpWidget(
+        const TickerMode(
+          enabled: false,
+          child: MyApp(),
+        ),
+      );
+      // Use bounded pumps instead of pumpAndSettle on a continuously animating screen.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       // Verify we are on MyHomePage.
       expect(find.text('preference_frontend'), findsOneWidget);
       expect(find.text('preference_frontend App is being generated...'), findsOneWidget);
 
-      // Add a floating action button for test-only push by using a Navigator action
-      // via the Overlay. Since app does not include trigger controls, we push programmatically.
+      // Push a test screen programmatically via Navigator.
       final navigatorState = tester.state<NavigatorState>(find.byType(Navigator));
-      // Push a test screen.
       Future<String?> routeFuture = navigatorState.push<String>(
         MaterialPageRoute<String>(
           builder: (context) => const _TestSecondScreen(
@@ -55,14 +60,17 @@ void main() {
         ),
       );
 
-      await tester.pumpAndSettle();
+      // Let the push animation complete.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
 
       // On second screen.
       expect(find.text('Second'), findsWidgets); // title and body text
 
       // Pop with a result.
       await tester.tap(find.byKey(const Key('pop_button')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
 
       // We should be back on MyHomePage.
       expect(find.text('preference_frontend App is being generated...'), findsOneWidget);
@@ -75,19 +83,24 @@ void main() {
 
   group('Navigation - named routes (local test scaffold)', () {
     testWidgets('Navigator.pushNamed and pop works using local routes map', (tester) async {
-      // Build a local MaterialApp that uses named routes only for this test.
-      final localApp = MaterialApp(
-        routes: <String, WidgetBuilder>{
-          '/': (_) => const MyHomePage(title: 'preference_frontend'),
-          '/second': (_) => const _TestSecondScreen(
-                key: Key('named_second_screen_route'),
-                label: 'Named Second',
-              ),
-        },
+      // Build a local MaterialApp that uses named routes only for this test and
+      // disable tickers while on home to avoid continuous animations settling issues.
+      final localApp = const TickerMode(
+        enabled: false,
+        child: MaterialApp(
+          routes: <String, WidgetBuilder>{
+            '/': (_) => MyHomePage(title: 'preference_frontend'),
+            '/second': (_) => _TestSecondScreen(
+                  key: Key('named_second_screen_route'),
+                  label: 'Named Second',
+                ),
+          },
+        ),
       );
 
       await tester.pumpWidget(localApp);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       // Confirm home.
       expect(find.text('preference_frontend'), findsOneWidget);
@@ -96,14 +109,17 @@ void main() {
       // Navigate to named route.
       final navigatorState = tester.state<NavigatorState>(find.byType(Navigator));
       Future<String?> routeFuture = navigatorState.pushNamed<String>('/second');
-      await tester.pumpAndSettle();
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
 
       // Assert on named second screen.
       expect(find.text('Named Second'), findsWidgets);
 
       // Pop back using the button.
       await tester.tap(find.byKey(const Key('pop_button')));
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
 
       // Back on home.
       expect(find.text('preference_frontend App is being generated...'), findsOneWidget);
@@ -115,8 +131,14 @@ void main() {
 
   group('Navigation - back button behavior', () {
     testWidgets('Android back button (escape) pops the route', (tester) async {
-      await tester.pumpWidget(const MyApp());
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        const TickerMode(
+          enabled: false,
+          child: MyApp(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       // Push second screen.
       final navigatorState = tester.state<NavigatorState>(find.byType(Navigator));
@@ -128,23 +150,30 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
 
       // Verify on second screen.
       expect(find.text('Back Second'), findsWidgets);
 
       // Simulate back navigation via back button/escape.
-      // This sends a key event equivalent to the system back on Android test env.
       await tester.sendKeyEvent(LogicalKeyboardKey.escape);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 250));
 
       // Assert we returned to home.
       expect(find.text('preference_frontend App is being generated...'), findsOneWidget);
     });
 
     testWidgets('WillPopScope-like behavior: canPop false on root', (tester) async {
-      await tester.pumpWidget(const MyApp());
-      await tester.pumpAndSettle();
+      await tester.pumpWidget(
+        const TickerMode(
+          enabled: false,
+          child: MyApp(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 200));
 
       final navigatorState = tester.state<NavigatorState>(find.byType(Navigator));
       // Root should not be able to pop initially.
@@ -159,7 +188,8 @@ void main() {
           ),
         ),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
       expect(navigatorState.canPop(), isTrue);
     });
   });

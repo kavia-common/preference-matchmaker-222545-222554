@@ -55,6 +55,10 @@ Optional: Convert LCOV to HTML locally (requires genhtml):
   - Navigator.push/pop flows with a dummy second screen
   - Named route navigation via a local routes map scaffold
   - Back button behavior (using escape key event in tests)
+- Important: Avoid using `pumpAndSettle()` on screens with continuous animations (e.g., `CircularProgressIndicator` on home),
+  as it may never settle. Instead:
+  - Wrap the subtree with `TickerMode(enabled: false, child: ...)` while asserting on the home screen, and
+  - Use bounded pumps: `await tester.pump(); await tester.pump(const Duration(milliseconds: 200));`.
 - Run only navigation tests:
   - flutter test test/navigation/
 

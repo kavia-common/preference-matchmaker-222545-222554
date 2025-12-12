@@ -32,9 +32,13 @@ void main() {
     });
 
     test('throws error path', () async {
-      when(() => mock.fetchGreeting(any())).thenThrow(Exception('network'));
+      // Stub the specific argument to avoid loose any() mismatch and ensure deterministic behavior.
+      when(() => mock.fetchGreeting('user-2')).thenThrow(Exception('network'));
 
+      // Assert the call throws before verifying interactions.
       expect(() => mock.fetchGreeting('user-2'), throwsA(isA<Exception>()));
+
+      // Verify it was invoked exactly once.
       verify(() => mock.fetchGreeting('user-2')).called(1);
     });
   });
