@@ -77,7 +77,7 @@ void main() {
 
       // Assert the result from the popped route.
       final result = await routeFuture;
-      expect(result, 'popped');
+      expect(result as String?, 'popped');
     });
   });
 
@@ -108,7 +108,7 @@ void main() {
 
       // Navigate to named route.
       final navigatorState = tester.state<NavigatorState>(find.byType(Navigator));
-      Future<String?> routeFuture = navigatorState.pushNamed<String>('/second');
+      final Future<Object?> routeFuture = navigatorState.pushNamed('/second');
 
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 300));
