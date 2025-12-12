@@ -85,12 +85,12 @@ void main() {
     testWidgets('Navigator.pushNamed and pop works using local routes map', (tester) async {
       // Build a local MaterialApp that uses named routes only for this test and
       // disable tickers while on home to avoid continuous animations settling issues.
-      final localApp = const TickerMode(
+      final localApp = TickerMode(
         enabled: false,
         child: MaterialApp(
           routes: <String, WidgetBuilder>{
-            '/': (_) => MyHomePage(title: 'preference_frontend'),
-            '/second': (_) => _TestSecondScreen(
+            '/': (_) => const MyHomePage(title: 'preference_frontend'),
+            '/second': (_) => const _TestSecondScreen(
                   key: Key('named_second_screen_route'),
                   label: 'Named Second',
                 ),
