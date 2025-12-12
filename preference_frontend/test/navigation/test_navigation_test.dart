@@ -77,7 +77,7 @@ void main() {
 
       // Assert the result from the popped route.
       final result = await routeFuture;
-      expect(result as String?, 'popped');
+      expect(result, 'popped');
     });
   });
 
