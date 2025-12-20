@@ -8,7 +8,7 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
   - background #f9fafb, surface #ffffff, text #111827
 - Bottom navigation with 4 tabs:
   - Home (swipe-style stacked profile cards placeholder)
-  - Matches (grid of match cards, with Filters FAB)
+  - Matches (active filter chips + grid of match cards, with Filters FAB)
   - Chat (list of conversations)
   - Profile (user summary and settings placeholders)
 - Reusable widgets: ProfileCard, MatchCard, ChatListItem, PrimaryButton, AccentChip
