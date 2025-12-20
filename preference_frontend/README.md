@@ -9,6 +9,17 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
 - Bottom navigation with 4 tabs:
   - Home (swipe-style stacked profile cards placeholder)
   - Matches (active filter chips + grid of match cards, with Filters FAB)
+    - Active filter chips use concise labels and a deterministic order:
+      1) Height, 2) Weight, 3) Hair Color (alphabetical within set), 4) Ethnicity (alphabetical within set), 5) Religion (alphabetical within set).
+    - Chip wording examples: Hair: Blonde, Ethnicity: Asian, Religion: Christian, Height: 160–185 cm, Weight: 55–80 kg.
+    - Icons per category (Material icons), styled with Ocean Professional theme colors:
+      - Height: height
+      - Weight: monitor_weight
+      - Hair Color: face_3
+      - Ethnicity: diversity_3
+      - Religion: public (neutral symbol)
+    - Chips are individually deletable (clears only that value) and a Clear All action is provided.
+    - Accessibility: semantic labels include the category and value for screen readers.
   - Chat (list of conversations)
   - Profile (user summary and settings placeholders)
 - Reusable widgets: ProfileCard, MatchCard, ChatListItem, PrimaryButton, AccentChip
