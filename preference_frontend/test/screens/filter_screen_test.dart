@@ -24,58 +24,55 @@ Widget _buildApp() {
 }
 
 void main() {
-  testWidgets('FilterScreen: enter values and save updates provider', (tester) async {
+  testWidgets('FilterScreen: toggles and sliders update provider and Apply pops', (tester) async {
     await tester.pumpWidget(_buildApp());
     await tester.pump();
 
-    // Enter height and weight values.
-    await tester.enterText(find.byKey(const Key('min_height_field')), '165');
-    await tester.enterText(find.byKey(const Key('max_height_field')), '185');
-    await tester.enterText(find.byKey(const Key('min_weight_field')), '55');
-    await tester.enterText(find.byKey(const Key('max_weight_field')), '80');
-
-    // Select race.
-    await tester.tap(find.byKey(const Key('race_dropdown')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 200));
-    await tester.tap(find.text(Race.white.name).last);
+    // Tap first checkbox (HairColor first item).
+    await tester.tap(find.byType(CheckboxListTile).first);
     await tester.pump();
 
-    // Select hair color.
-    await tester.tap(find.byKey(const Key('hair_dropdown')));
-    await tester.pumpAndSettle(const Duration(milliseconds: 200));
-    await tester.tap(find.text(HairColor.brown.name).last);
+    // Adjust height slider slightly.
+    final heightSlider = find.byType(RangeSlider).first;
+    await tester.drag(heightSlider, const Offset(40, 0));
     await tester.pump();
 
-    // Save.
-    await tester.tap(find.byKey(const Key('save_button')));
-    await tester.pump(); // allow maybePop to occur
+    // Adjust weight slider slightly.
+    final weightSlider = find.byType(RangeSlider).at(1);
+    await tester.drag(weightSlider, const Offset(-20, 0));
+    await tester.pump();
 
-    // Verify provider updated.
-    final provider = tester.widget<MaterialApp>(find.byType(MaterialApp)).navigatorKey == null
-        ? Provider.of<FilterProvider>(tester.element(find.byType(Scaffold)), listen: false)
-        : Provider.of<FilterProvider>(tester.element(find.byType(MaterialApp)), listen: false);
+    // Apply
+    await tester.tap(find.byKey(const Key('apply_all_button')));
+    await tester.pump();
 
+    final provider = Provider.of<FilterProvider>(tester.element(find.byType(Scaffold)), listen: false);
     final criteria = provider.criteria;
-    expect(criteria.heightRange.min, 165);
-    expect(criteria.heightRange.max, 185);
-    expect(criteria.weightRange.min, 55);
-    expect(criteria.weightRange.max, 80);
-    expect(criteria.race, Race.white);
-    expect(criteria.hairColor, HairColor.brown);
+    // Ranges are within bounds after user interaction.
+    expect(criteria.heightRange.min, inInclusiveRange(100, 220));
+    expect(criteria.heightRange.max, inInclusiveRange(100, 220));
+    expect(criteria.weightRange.min, inInclusiveRange(40, 150));
+    expect(criteria.weightRange.max, inInclusiveRange(40, 150));
   });
 
-  testWidgets('FilterScreen: reset clears local inputs and provider', (tester) async {
+  testWidgets('FilterScreen: reset clears provider to defaults and resets local ranges', (tester) async {
     await tester.pumpWidget(_buildApp());
     await tester.pump();
 
-    await tester.enterText(find.byKey(const Key('min_height_field')), '170');
-    await tester.enterText(find.byKey(const Key('max_height_field')), '182');
+    // Change a checkbox.
+    await tester.tap(find.byType(CheckboxListTile).first);
+    await tester.pump();
 
+    // Tap Reset (inline button)
     await tester.tap(find.byKey(const Key('reset_button')));
     await tester.pump();
 
-    // After reset, provider should be back to defaults.
     final provider = Provider.of<FilterProvider>(tester.element(find.byType(Scaffold)), listen: false);
-    expect(provider.criteria, const FilterCriteria());
+    final criteria = provider.criteria;
+    expect(criteria.hairColors.isEmpty, isTrue);
+    expect(criteria.races.isEmpty, isTrue);
+    expect(criteria.religions.isEmpty, isTrue);
+    expect(criteria.heightRange, const Range(min: 140, max: 210));
+    expect(criteria.weightRange, const Range(min: 40, max: 140));
   });
 }
