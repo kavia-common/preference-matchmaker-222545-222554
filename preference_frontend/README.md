@@ -9,6 +9,7 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
 - Bottom navigation with 4 tabs:
   - Home (swipe-style stacked profile cards placeholder)
   - Matches (active filter chips + grid of match cards, with Filters FAB)
+    - Active filter chips are tappable: tapping a chip opens the Filters screen and auto-scrolls to the corresponding section (Height, Weight, Hair, Ethnicity, Religion).
     - Active filter chips use concise labels and a deterministic order:
       1) Height, 2) Weight, 3) Hair Color (alphabetical within set), 4) Ethnicity (alphabetical within set), 5) Religion (alphabetical within set).
     - Chip wording examples: Hair: Blonde, Ethnicity: Asian, Religion: Christian, Height: 160–185 cm, Weight: 55–80 kg.
