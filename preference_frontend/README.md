@@ -2,18 +2,22 @@
 
 This is the Preference mobile app (Flutter) implementing the initial UI scaffolding with the Ocean Professional style.
 
-## Features (initial)
+## Features
 - Material 3 Ocean Professional Theme:
   - primary #2563EB, secondary/success #F59E0B, error #EF4444
   - background #f9fafb, surface #ffffff, text #111827
 - Bottom navigation with 4 tabs:
   - Home (swipe-style stacked profile cards placeholder)
-  - Matches (grid of match cards)
+  - Matches (grid of match cards, with Filters FAB)
   - Chat (list of conversations)
   - Profile (user summary and settings placeholders)
 - Reusable widgets: ProfileCard, MatchCard, ChatListItem, PrimaryButton, AccentChip
 - Mock data models so the app runs without external services
-- Filter models and provider, plus a minimal Filter screen for tests
+- Comprehensive Filters:
+  - Checkbox groups for Hair Color, Religion, Ethnicity
+  - RangeSliders for Height (100–220 cm) and Weight (40–150 kg)
+  - Apply All button (persistent bottom bar) and Reset action
+  - Provider-based state (FilterProvider) with copyWith/equality on FilterCriteria
 
 ## Run locally
 1. Install Flutter (see https://docs.flutter.dev/get-started/install)
@@ -30,6 +34,11 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
   - state/filter_provider.dart
   - screens/ (home, matches, chat, profile, filter)
   - widgets/ (primary_button, accent_chip, profile_card, match_card, chat_list_item)
+
+### Filters navigation
+- From Matches tab, tap the "Filters" FAB to open the Filter screen.
+- Adjust checkboxes and ranges, then tap "Apply All" to apply and dismiss.
+- Use "Reset" (AppBar or the inline button) to clear selections to defaults.
 
 Notes:
 - No external service calls are made; all data is stubbed/mocked.
