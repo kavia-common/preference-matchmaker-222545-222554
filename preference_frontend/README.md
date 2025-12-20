@@ -18,6 +18,7 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
   - RangeSliders for Height (100–220 cm) and Weight (40–150 kg)
   - Apply All button (persistent bottom bar) and Reset action
   - Provider-based state (FilterProvider) with copyWith/equality on FilterCriteria
+  - Local persistence: Filter selections are stored on device using SharedPreferences and restored on app start.
 
 ## Run locally
 1. Install Flutter (see https://docs.flutter.dev/get-started/install)
@@ -31,7 +32,7 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
   - main.dart (entrypoint + bottom nav)
   - theme/app_theme.dart
   - models/ (profile, conversation, filter_criteria)
-  - state/filter_provider.dart
+  - state/filter_provider.dart, state/filter_persistence.dart
   - screens/ (home, matches, chat, profile, filter)
   - widgets/ (primary_button, accent_chip, profile_card, match_card, chat_list_item)
 
@@ -41,5 +42,6 @@ This is the Preference mobile app (Flutter) implementing the initial UI scaffold
 - Use "Reset" (AppBar or the inline button) to clear selections to defaults.
 
 Notes:
+- Filter selections are persisted locally under the key `filter_criteria`. If persistence data is missing or malformed, defaults are used automatically.
 - No external service calls are made; all data is stubbed/mocked.
 - The app uses only standard Flutter/Provider already included in pubspec.
