@@ -1,0 +1,32 @@
+Post-Fix Analyze Summary — preference_frontend (CI Final Snapshot)
+Date: 2025-12-21
+
+Automated steps (completed as instructed):
+- flutter pub get — success
+- dart format . — success (no changes on the latest run)
+- dart fix --apply — success (no safe fixes available)
+- dart analyze . — 47 issues found (blocking)
+
+CI analyzer snapshot (highlights):
+- test/navigation/test_navigation_test.dart:4:8 — uri_does_not_exist: 'package:preference_frontend/main.dart'
+- test/navigation/test_navigation_test.dart:39:71 — invalid_constant (MyApp undefined)
+- test/navigation/test_navigation_test.dart:100:31 — creation_with_non_type: MyHomePage
+- test/screens/filter_screen_test.dart:3:8 — uri_does_not_exist: 'package:preference_frontend/models/filter_criteria.dart'
+- test/screens/filter_screen_test.dart:4:8 — uri_does_not_exist: 'package:preference_frontend/screens/filter_screen.dart'
+- test/screens/filter_screen_test.dart:5:8 — uri_does_not_exist: 'package:preference_frontend/state/filter_provider.dart'
+- test/state/filter_provider_test.dart:2:8 — uri_does_not_exist: 'package:preference_frontend/models/filter_criteria.dart'
+- test/state/filter_provider_test.dart:3:8 — uri_does_not_exist: 'package:preference_frontend/state/filter_provider.dart'
+- test/widget_test.dart:2:8 — uri_does_not_exist: 'package:preference_frontend/main.dart'
+- test/widgets/test_main_widgets_test.dart:3:8 — uri_does_not_exist: 'package:preference_frontend/main.dart'
+
+Root cause:
+- Missing application sources under lib/ referenced by tests:
+  • lib/main.dart (MyApp/MyHomePage)
+  • lib/models/filter_criteria.dart (FilterCriteria, Range, Race, HairColor, Religion)
+  • lib/state/filter_provider.dart (FilterProvider)
+  • lib/screens/filter_screen.dart (FilterScreen with required keys)
+
+Notes:
+- Per task scope, no manual source files were added; only automated formatting and safe fixes were applied.
+- Implementing the missing lib/ sources is required to clear analyzer errors.
+- See analysis/STATUS.md and TODO_NEXT_STEPS.txt for guidance on next steps.

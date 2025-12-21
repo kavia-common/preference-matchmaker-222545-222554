@@ -1,0 +1,20 @@
+Post-Fix Analyze Summary — preference_frontend (Reduced Snapshot)
+Date: 2025-12-21
+
+Analyzer excerpt from CI (latest):
+5 issues found (ran in ~1.3s)
+
+Errors:
+- test/widgets/test_main_widgets_test.dart:3:8 — uri_does_not_exist: 'package:preference_frontend/main.dart'
+- test/widgets/test_main_widgets_test.dart:8:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:18:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:29:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:36:37 — creation_with_non_type: The name 'MyApp' isn't a class
+
+Root cause:
+- Missing lib/ sources referenced by tests, notably lib/main.dart exposing MyApp (and MyHomePage).
+
+Notes:
+- This file captures the reduced 5-error snapshot reported by CI for quick triage.
+- Only automated tooling was applied in this task; no manual source files were added.
+- Implement lib/main.dart (with MyApp/MyHomePage) to clear these, then re-run analyze.

@@ -1,0 +1,49 @@
+Post-Approval Analyze Summary (CI retry 7) — preference_frontend
+Date: 2025-12-21
+
+Command executed by CI:
+  dart analyze .
+
+Result:
+  47 issues found (blocking)
+
+Abbreviated errors:
+- test/navigation/test_navigation_test.dart
+  • 4:8   uri_does_not_exist  package:preference_frontend/main.dart
+  • 39:71 invalid_constant; undefined_function MyApp
+  • 100:31 creation_with_non_type MyHomePage
+  • 151:71 invalid_constant; undefined_function MyApp
+  • 189:71 invalid_constant; undefined_function MyApp
+- test/screens/filter_screen_test.dart
+  • 3:8   uri_does_not_exist  package:preference_frontend/models/filter_criteria.dart
+  • 4:8   uri_does_not_exist  package:preference_frontend/screens/filter_screen.dart
+  • 5:8   uri_does_not_exist  package:preference_frontend/state/filter_provider.dart
+  • 11:30 non_type_as_type_argument FilterProvider
+  • 11:61 undefined_function       FilterProvider
+  • 20:34 creation_with_non_type    FilterScreen
+  • 52:36, 79:36 non_type_as_type_argument FilterProvider
+  • 87:42, 88:42 creation_with_non_type Range
+- test/state/filter_provider_test.dart
+  • Multiple undefined/creation_with_non_type for FilterProvider, FilterCriteria, Range, Race, HairColor, Religion
+- test/widget_test.dart; test/widgets/test_main_widgets_test.dart
+  • uri_does_not_exist package:preference_frontend/main.dart
+  • creation_with_non_type MyApp
+
+Cause:
+- Missing lib/ sources referenced by tests:
+  • lib/main.dart
+  • lib/models/filter_criteria.dart
+  • lib/state/filter_provider.dart
+  • lib/screens/filter_screen.dart
+
+Scope note:
+- This task only performed automated formatting and safe fixes; no new source files were added.
+
+Suggested next steps (outside current scope):
+1) Implement the missing lib/ files and required symbols.
+2) Re-run:
+   - flutter pub get
+   - dart format .
+   - dart analyze .
+   - dart fix --apply
+   - flutter test

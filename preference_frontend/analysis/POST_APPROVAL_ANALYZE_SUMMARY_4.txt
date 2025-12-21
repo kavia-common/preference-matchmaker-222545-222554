@@ -1,0 +1,28 @@
+Post-Approval Analyze Summary (CI retry 3) — preference_frontend
+Date: 2025-12-21
+
+Command executed by CI:
+  dart analyze .
+
+Result:
+  5 issues found (blocking)
+
+Details:
+- test/widgets/test_main_widgets_test.dart
+  • 3:8   uri_does_not_exist      Target of URI doesn't exist: 'package:preference_frontend/main.dart'
+  • 8:37  creation_with_non_type  The name 'MyApp' isn't a class
+  • 18:37 creation_with_non_type  The name 'MyApp' isn't a class
+  • 29:37 creation_with_non_type  The name 'MyApp' isn't a class
+  • 36:37 creation_with_non_type  The name 'MyApp' isn't a class
+
+Notes:
+- These errors persist due to the missing application entrypoint at lib/main.dart (expected to define MyApp, optionally MyHomePage).
+- Within this task scope, only automated formatting and safe fixes were performed; no new source files were added.
+
+Suggested next steps (outside current scope):
+1) Create lib/main.dart and define MyApp (and MyHomePage if required by tests).
+2) Re-run:
+   - flutter pub get
+   - dart format .
+   - dart analyze .
+   - flutter test

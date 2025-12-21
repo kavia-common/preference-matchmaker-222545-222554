@@ -1,0 +1,50 @@
+Post-Approval Analyze Summary (CI retry 6) — preference_frontend
+Date: 2025-12-21
+
+Command executed by CI:
+  dart analyze .
+
+Result:
+  47 issues found (blocking)
+
+Abbreviated errors (same pattern persists):
+- test/navigation/test_navigation_test.dart
+  • 4:8   uri_does_not_exist  package:preference_frontend/main.dart
+  • 39:71 invalid_constant; undefined_function MyApp
+  • 100:31 creation_with_non_type MyHomePage
+  • 151:71 invalid_constant; undefined_function MyApp
+  • 189:71 invalid_constant; undefined_function MyApp
+
+- test/screens/filter_screen_test.dart
+  • 3:8   uri_does_not_exist  package:preference_frontend/models/filter_criteria.dart
+  • 4:8   uri_does_not_exist  package:preference_frontend/screens/filter_screen.dart
+  • 5:8   uri_does_not_exist  package:preference_frontend/state/filter_provider.dart
+  • 11:30 non_type_as_type_argument FilterProvider
+  • 11:61 undefined_function       FilterProvider
+  • 20:34 creation_with_non_type    FilterScreen
+  • 52:36, 79:36 non_type_as_type_argument FilterProvider
+  • 87:42, 88:42 creation_with_non_type Range
+
+- test/state/filter_provider_test.dart
+  • 2:8   uri_does_not_exist  models/filter_criteria.dart
+  • 3:8   uri_does_not_exist  state/filter_provider.dart
+  • Multiple undefined/creation_with_non_type for FilterProvider, FilterCriteria, Range, Race, HairColor, Religion
+
+- test/widget_test.dart and test/widgets/test_main_widgets_test.dart
+  • uri_does_not_exist package:preference_frontend/main.dart
+  • creation_with_non_type MyApp
+
+Cause:
+- Missing application sources in lib/ (main.dart, models/filter_criteria.dart, state/filter_provider.dart, screens/filter_screen.dart) referenced by tests.
+
+Scope note:
+- This task performed automated formatting and safe fixes only; no manual source creation was within scope.
+
+Recommended next steps (outside current scope):
+1) Implement the missing lib/ files and required symbols.
+2) Re-run:
+   - flutter pub get
+   - dart format .
+   - dart analyze .
+   - dart fix --apply
+   - flutter test

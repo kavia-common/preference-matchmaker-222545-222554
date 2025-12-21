@@ -1,0 +1,15 @@
+Post-Fix Analyze Summary — Brief Pointer
+
+Automated steps completed:
+- flutter pub get
+- dart format .
+- dart fix --apply
+- dart analyze .
+
+Result:
+- 47 analyzer issues remain, caused by missing lib/ sources referenced by tests.
+
+See:
+- POST_FIX_ANALYZE_SUMMARY.txt (authoritative)
+- POST_FIX_ANALYZE_SUMMARY_latest_run.txt (latest run snapshot)
+- STATUS.md and TODO_NEXT_STEPS.txt (next actions)

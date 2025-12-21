@@ -1,0 +1,24 @@
+TODO — Next Steps To Clear Analyzer Errors
+
+- Implement minimal lib/ sources referenced by tests:
+  1) lib/main.dart — defines MyApp (and optionally MyHomePage)
+  2) lib/models/filter_criteria.dart — FilterCriteria, Range, enums (Race, HairColor, Religion)
+  3) lib/state/filter_provider.dart — FilterProvider (ChangeNotifier) + methods used in tests
+  4) lib/screens/filter_screen.dart — FilterScreen with keys 'apply_all_button' and 'reset_button'
+
+- After implementation, run:
+  - flutter pub get
+  - dart format .
+  - dart analyze .
+  - dart fix --apply
+  - flutter test
+
+- Reference documents:
+  - analysis/READ_ME_FIRST_POST_FIX.md
+  - analysis/NEXT_AGENT_CHECKLIST.md
+  - analysis/ARTIFACTS_INDEX.md
+  - analysis/POST_FIX_ANALYZE_SUMMARY.txt
+  - analysis/POST_APPROVAL_ANALYZE_SUMMARY_*.txt
+
+Note:
+These steps are outside the scope of the previous formatting-and-fixes task; they are required to resolve the 47 analyzer errors tied to missing lib/ sources.

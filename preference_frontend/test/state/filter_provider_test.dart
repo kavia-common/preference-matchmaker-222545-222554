@@ -37,7 +37,10 @@ void main() {
 
       // Update ranges via Range objects.
       provider.updateHeightRange(const Range(min: 150.0, max: 200.0));
-      expect(provider.criteria.heightRange, const Range(min: 150.0, max: 200.0));
+      expect(
+        provider.criteria.heightRange,
+        const Range(min: 150.0, max: 200.0),
+      );
       expect(notifyCount, 4);
 
       provider.updateWeightRange(const Range(min: 60.0, max: 100.0));

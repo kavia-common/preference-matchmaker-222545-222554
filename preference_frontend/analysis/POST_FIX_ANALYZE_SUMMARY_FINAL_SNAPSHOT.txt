@@ -1,0 +1,26 @@
+Post-Fix Analyze Summary — preference_frontend (Final Snapshot for this run)
+Date: 2025-12-21
+
+Automated steps executed:
+- flutter pub get — success
+- dart format . — success (no changes on latest run)
+- dart fix --apply — success (no safe fixes available)
+- dart analyze . — 47 issues found (blocking)
+
+CI excerpt (common reduced set observed):
+- test/widgets/test_main_widgets_test.dart:3:8 — uri_does_not_exist: 'package:preference_frontend/main.dart'
+- test/widgets/test_main_widgets_test.dart:8:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:18:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:29:37 — creation_with_non_type: The name 'MyApp' isn't a class
+- test/widgets/test_main_widgets_test.dart:36:37 — creation_with_non_type: The name 'MyApp' isn't a class
+
+Root cause:
+- Missing application sources under lib/ referenced by tests. Implement:
+  • lib/main.dart (MyApp/MyHomePage)
+  • lib/models/filter_criteria.dart (FilterCriteria, Range, Race, HairColor, Religion)
+  • lib/state/filter_provider.dart (FilterProvider)
+  • lib/screens/filter_screen.dart (FilterScreen with keys)
+
+Notes:
+- As instructed, only automated formatting and safe fixes were applied; no manual code was added.
+- See analysis/STATUS.md, POST_FIX_ANALYZE_SUMMARY.txt, and TODO_NEXT_STEPS.txt for guidance.

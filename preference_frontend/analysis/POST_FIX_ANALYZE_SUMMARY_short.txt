@@ -1,0 +1,30 @@
+Post-Fix Analyze Summary — preference_frontend (Short)
+Date: 2025-12-21
+
+Automated steps completed:
+- flutter pub get — success
+- dart format . — success (no changes on latest run)
+- dart fix --apply — success (no safe fixes available)
+- dart analyze . — 47 issues found (blocking)
+
+Remaining issues (high level):
+- Missing package imports (uri_does_not_exist):
+  • package:preference_frontend/main.dart
+  • package:preference_frontend/models/filter_criteria.dart
+  • package:preference_frontend/state/filter_provider.dart
+  • package:preference_frontend/screens/filter_screen.dart
+- Undefined / non-type symbols cascading from missing sources:
+  • MyApp, MyHomePage
+  • FilterProvider
+  • FilterCriteria, Range, Race, HairColor, Religion
+  • FilterScreen
+
+Hotspot files:
+- test/navigation/test_navigation_test.dart
+- test/screens/filter_screen_test.dart
+- test/state/filter_provider_test.dart
+- test/widget_test.dart
+- test/widgets/test_main_widgets_test.dart
+
+Note:
+Only automated formatting and safe fixes were applied per instructions; no manual source edits. Errors persist until missing lib/ sources are implemented.

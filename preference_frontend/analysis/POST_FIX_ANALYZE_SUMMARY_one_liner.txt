@@ -1,0 +1,1 @@
+Post-fix analyze: 47 issues remain (all cascade from missing lib/ files: lib/main.dart, lib/models/filter_criteria.dart, lib/state/filter_provider.dart, lib/screens/filter_screen.dart). Automated steps completed: flutter pub get; dart format .; dart fix --apply; dart analyze . — no manual edits made.

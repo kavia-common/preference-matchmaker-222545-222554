@@ -1,0 +1,21 @@
+This repository has multiple post-fix analyzer summaries generated during automated formatting/fix:
+- POST_FIX_ANALYZE_SUMMARY.txt (authoritative summary)
+- POST_FIX_ANALYZE_SUMMARY_LATEST.txt
+- POST_FIX_ANALYZE_SUMMARY_latest_run.txt
+- POST_FIX_ANALYZE_SUMMARY_MINI.txt
+- POST_FIX_ANALYZE_SUMMARY_brief.txt
+- POST_FIX_ANALYZE_SUMMARY_concise.txt
+- POST_FIX_ANALYZE_SUMMARY_ci_snapshot.txt
+- POST_FIX_ANALYZE_SUMMARY_FINAL.txt
+- POST_FIX_ANALYZE_SUMMARY_FINAL_SNAPSHOT.txt
+- POST_FIX_ANALYZE_SUMMARY_5_ISSUES.txt
+- POST_FIX_ANALYZE_SUMMARY_topline.txt
+- POST_FIX_ANALYZE_SUMMARY_latest_run.txt
+- POST_FIX_ANALYZE_SUMMARY_CI_FINAL.txt
+
+Latest status (short):
+- Automated steps completed (pub get, format, fix).
+- dart analyze reports 47 issues, all cascading from missing lib/ sources referenced by tests.
+
+Next action (outside formatting scope):
+- Implement required lib/ files (main.dart, models/filter_criteria.dart, state/filter_provider.dart, screens/filter_screen.dart), then re-run analyzer.

@@ -22,7 +22,9 @@ void main() {
     });
 
     test('returns greeting and verifies interaction', () async {
-      when(() => mock.fetchGreeting(any())).thenAnswer((_) async => 'Hello Alice');
+      when(
+        () => mock.fetchGreeting(any()),
+      ).thenAnswer((_) async => 'Hello Alice');
 
       final result = await mock.fetchGreeting('user-1');
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:preference_frontend/main.dart';
 
-
 void main() {
   group('MyApp', () {
     testWidgets('renders MaterialApp with title and home', (tester) async {
@@ -13,13 +12,20 @@ void main() {
   });
 
   group('MyHomePage', () {
-    testWidgets('shows generation message and a progress indicator', (tester) async {
+    testWidgets('shows generation message and a progress indicator', (
+      tester,
+    ) async {
       await tester.pumpWidget(const MyApp());
-      expect(find.text('preference_frontend App is being generated...'), findsOneWidget);
+      expect(
+        find.text('preference_frontend App is being generated...'),
+        findsOneWidget,
+      );
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
-    testWidgets('AppBar uses inversePrimary color and has title', (tester) async {
+    testWidgets('AppBar uses inversePrimary color and has title', (
+      tester,
+    ) async {
       await tester.pumpWidget(const MyApp());
       final appBarFinder = find.byType(AppBar);
       expect(appBarFinder, findsOneWidget);
