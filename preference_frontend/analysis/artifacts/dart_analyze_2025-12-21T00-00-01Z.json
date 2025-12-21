@@ -1,0 +1,68 @@
+{
+  "run_id": "2025-12-21T00-00-01Z",
+  "tool": "dart_analyze",
+  "summary": {
+    "errors": 5,
+    "warnings": 0,
+    "infos": 0,
+    "blocking": true
+  },
+  "issues": [
+    {
+      "severity": "error",
+      "rule": "uri_does_not_exist",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 3,
+      "column": 8,
+      "message": "Target of URI doesn't exist: 'package:preference_frontend/main.dart'",
+      "quick_fixes": [
+        "Create lib/main.dart with MyApp/MyHomePage",
+        "Confirm package name is 'preference_frontend' in pubspec.yaml",
+        "Ensure lib/ is included in analysis and build"
+      ]
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 9,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class"
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 17,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class"
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 23,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class"
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 30,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class"
+    }
+  ],
+  "hotspots": [
+    {
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "issue_count": 5
+    }
+  ],
+  "next_actions": [
+    "Implement missing lib/main.dart",
+    "Re-run: dart analyze .",
+    "Then run: flutter test"
+  ]
+}

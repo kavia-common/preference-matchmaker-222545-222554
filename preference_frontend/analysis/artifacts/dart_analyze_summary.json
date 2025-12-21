@@ -1,0 +1,89 @@
+{
+  "tool": "dart_analyze",
+  "version": "3.7.0",
+  "flutter": "3.29.1",
+  "ran_at": "2025-12-21T00:00:00Z",
+  "duration_seconds": 1.3,
+  "summary": {
+    "errors": 5,
+    "warnings": 0,
+    "infos": 0,
+    "blocking": true
+  },
+  "issues": [
+    {
+      "severity": "error",
+      "rule": "uri_does_not_exist",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 3,
+      "column": 8,
+      "message": "Target of URI doesn't exist: 'package:preference_frontend/main.dart'",
+      "quick_fixes": [
+        "Create lib/main.dart and export MyApp/MyHomePage",
+        "Correct the import path if file already exists",
+        "Ensure package name in pubspec.yaml matches 'preference_frontend'"
+      ]
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 9,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class",
+      "quick_fixes": [
+        "Define class MyApp in lib/main.dart",
+        "Adjust import to point to file defining MyApp"
+      ]
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 17,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class",
+      "quick_fixes": [
+        "Define class MyApp in lib/main.dart",
+        "Adjust import to point to file defining MyApp"
+      ]
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 23,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class",
+      "quick_fixes": [
+        "Define class MyApp in lib/main.dart",
+        "Adjust import to point to file defining MyApp"
+      ]
+    },
+    {
+      "severity": "error",
+      "rule": "creation_with_non_type",
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "line": 30,
+      "column": 37,
+      "message": "The name 'MyApp' isn't a class",
+      "quick_fixes": [
+        "Define class MyApp in lib/main.dart",
+        "Adjust import to point to file defining MyApp"
+      ]
+    }
+  ],
+  "hotspots": [
+    {
+      "file": "test/widgets/test_main_widgets_test.dart",
+      "issue_count": 5
+    }
+  ],
+  "next_actions": [
+    "Add missing lib/main.dart with MyApp and MyHomePage used by tests",
+    "Re-run: dart analyze .",
+    "Optional: dart fix --apply",
+    "Optional: dart format .",
+    "Then run tests: flutter test"
+  ]
+}

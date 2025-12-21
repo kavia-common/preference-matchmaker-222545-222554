@@ -1,0 +1,43 @@
+Static Analysis Summary — preference_frontend
+Date: 2025-12-21
+
+Command:
+  dart analyze .
+
+Result:
+  47 issues found (blocking)
+
+Primary blocking errors:
+- Missing package imports (uri_does_not_exist):
+  • package:preference_frontend/main.dart
+  • package:preference_frontend/models/filter_criteria.dart
+  • package:preference_frontend/screens/filter_screen.dart
+  • package:preference_frontend/state/filter_provider.dart
+
+- Undefined classes/functions (cascade from missing files):
+  • MyApp, MyHomePage
+  • FilterProvider
+  • FilterScreen
+  • FilterCriteria, Range, Race, HairColor, Religion
+
+Hotspot files:
+  - test/navigation/test_navigation_test.dart
+  - test/screens/filter_screen_test.dart
+  - test/state/filter_provider_test.dart
+  - test/widget_test.dart
+  - test/widgets/test_main_widgets_test.dart
+
+Quick fixes (next actions):
+  1) Add missing sources under lib/:
+     - lib/main.dart (MyApp, MyHomePage)
+     - lib/models/filter_criteria.dart (FilterCriteria, Range, Race, HairColor, Religion)
+     - lib/state/filter_provider.dart (FilterProvider with required methods)
+     - lib/screens/filter_screen.dart (FilterScreen with apply_all_button, reset_button keys)
+  2) dart format .
+  3) dart analyze .
+  4) dart fix --apply
+  5) flutter test
+
+Notes:
+- analysis_options.yaml already includes flutter_lints.
+- After sources compile, consider enabling additional lints (e.g., prefer_single_quotes).
