@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-// Import the app entrypoint
-import 'package:preference_frontend/main.dart' as app;
+// Import the root widget directly instead of calling app.main()
+import 'package:preference_frontend/main.dart' show MyApp;
 
 /// Utility to ensure folder exists before saving screenshots.
 Future<void> _ensureDir(String path) async {
@@ -16,73 +16,55 @@ Future<void> _ensureDir(String path) async {
 }
 
 // PUBLIC_INTERFACE
-Future<void> main() async {
-  /** Entry point for the integration test that navigates through key screens
-   * (Home, Matches, Chat, Profile, Filter) and captures screenshots for each.
-   *
-   * Screenshots are saved under assets/screenshots/ with file names:
-   *  - home.png
-   *  - matches.png
-   *  - chat.png
-   *  - profile.png
-   *  - filter.png
-   *
-   * Run with a connected device or emulator:
-   *   flutter test integration_test --device <device_id>
-   * Or:
-   *   flutter drive --driver=test_driver/integration_test.dart --target=integration_test/screenshot_navigation_test.dart
+void main() {
+  /** Integration test that navigates Home, Matches, Chat, Profile and opens Filter,
+   * capturing screenshots for each into assets/screenshots/.
    */
-  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   const screenshotsDir = 'assets/screenshots';
-  await _ensureDir(screenshotsDir);
 
   group('Navigation screenshots', () {
     testWidgets('Capture screenshots for Home, Matches, Chat, Profile, Filter',
         (WidgetTester tester) async {
-      // Launch the app
-      app.main();
+      await _ensureDir(screenshotsDir);
+
+      // Launch the app by pumping MyApp directly
+      await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle(const Duration(seconds: 2));
 
-      // Helper to take a screenshot using the binding
       Future<void> takeShot(String name) async {
-        // The binding api writes to the test output; here we also ensure the dir exists.
         await _ensureDir(screenshotsDir);
-        // Some platforms save into test output directories; we also save to project folder
         final bytes = await binding.takeScreenshot(name);
         final file = File('$screenshotsDir/$name.png');
         await file.writeAsBytes(bytes);
       }
 
-      // Expect a BottomNavigationBar to be present
-      expect(find.byType(BottomNavigationBar), findsOneWidget);
+      // Expect a Material 3 NavigationBar to be present
+      expect(find.byType(NavigationBar), findsOneWidget);
 
-      // HOME tab: Typically index 0
-      // Try to find by label first; otherwise tap first BottomNavigationBarItem
+      // HOME tab
       Finder homeTab = find.text('Home');
       if (homeTab.evaluate().isEmpty) {
-        // fallback: first icon in BottomNavigationBar
         final items = find.descendant(
-          of: find.byType(BottomNavigationBar),
+          of: find.byType(NavigationBar),
           matching: find.byType(Icon),
         );
         if (items.evaluate().isNotEmpty) {
           homeTab = items.at(0);
-        } else {
-          homeTab = find.byType(BottomNavigationBar);
         }
       }
-      await tester.tap(homeTab);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      if (homeTab.evaluate().isNotEmpty) {
+        await tester.tap(homeTab);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+      }
       await takeShot('home');
 
       // MATCHES tab
       Finder matchesTab = find.text('Matches');
       if (matchesTab.evaluate().isEmpty) {
-        // fallback: second icon
         final icons = find.descendant(
-          of: find.byType(BottomNavigationBar),
+          of: find.byType(NavigationBar),
           matching: find.byType(Icon),
         );
         if (icons.evaluate().length >= 2) {
@@ -98,9 +80,8 @@ Future<void> main() async {
       // CHAT tab
       Finder chatTab = find.text('Chat');
       if (chatTab.evaluate().isEmpty) {
-        // fallback: third icon
         final icons = find.descendant(
-          of: find.byType(BottomNavigationBar),
+          of: find.byType(NavigationBar),
           matching: find.byType(Icon),
         );
         if (icons.evaluate().length >= 3) {
@@ -116,9 +97,8 @@ Future<void> main() async {
       // PROFILE tab
       Finder profileTab = find.text('Profile');
       if (profileTab.evaluate().isEmpty) {
-        // fallback: fourth icon
         final icons = find.descendant(
-          of: find.byType(BottomNavigationBar),
+          of: find.byType(NavigationBar),
           matching: find.byType(Icon),
         );
         if (icons.evaluate().length >= 4) {
@@ -131,22 +111,16 @@ Future<void> main() async {
         await takeShot('profile');
       }
 
-      // Go back to Home to access Filter (if accessible from Home)
+      // Return to Home before opening Filter
       if (homeTab.evaluate().isNotEmpty) {
         await tester.tap(homeTab);
         await tester.pumpAndSettle(const Duration(seconds: 1));
       }
 
-      // Try to open Filter screen:
-      // We attempt common triggers:
-      // 1) An IconButton with filter icon
-      // 2) A button labeled 'Filter' or with a Key('openFilter')
-      Finder openFilter = find.byKey(const Key('openFilter'));
+      // Open Filter via known key from MyApp AppBar icon
+      Finder openFilter = find.byKey(const Key('open_filters_button'));
       if (openFilter.evaluate().isEmpty) {
         openFilter = find.textContaining('Filter', findRichText: true);
-      }
-      if (openFilter.evaluate().isEmpty) {
-        openFilter = find.byIcon(Icons.filter_list);
       }
       if (openFilter.evaluate().isEmpty) {
         openFilter = find.byIcon(Icons.tune);
@@ -157,14 +131,19 @@ Future<void> main() async {
         await tester.pumpAndSettle(const Duration(seconds: 1));
         await takeShot('filter');
 
-        // Attempt to close if there is a Back button to not affect next tests
-        final backBtn = find.byTooltip('Back');
-        if (backBtn.evaluate().isNotEmpty) {
-          await tester.tap(backBtn);
+        // Close (via Apply All button or system Back)
+        final apply = find.byKey(const Key('apply_all_button'));
+        if (apply.evaluate().isNotEmpty) {
+          await tester.tap(apply);
           await tester.pumpAndSettle(const Duration(milliseconds: 500));
+        } else {
+          final backBtn = find.byTooltip('Back');
+          if (backBtn.evaluate().isNotEmpty) {
+            await tester.tap(backBtn);
+            await tester.pumpAndSettle(const Duration(milliseconds: 500));
+          }
         }
       } else {
-        // If not found, we still produce a "filter.png" placeholder from current view
         await takeShot('filter');
       }
     });
