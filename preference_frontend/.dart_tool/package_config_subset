@@ -96,8 +96,8 @@ file:///home/kavia/.pub-cache/hosted/pub.dev/fixnum-1.1.1/
 file:///home/kavia/.pub-cache/hosted/pub.dev/fixnum-1.1.1/lib/
 flutter_dotenv
 2.12
-file:///home/kavia/.pub-cache/hosted/pub.dev/flutter_dotenv-5.2.1/
-file:///home/kavia/.pub-cache/hosted/pub.dev/flutter_dotenv-5.2.1/lib/
+file:///home/kavia/.pub-cache/hosted/pub.dev/flutter_dotenv-6.0.0/
+file:///home/kavia/.pub-cache/hosted/pub.dev/flutter_dotenv-6.0.0/lib/
 flutter_lints
 3.5
 file:///home/kavia/.pub-cache/hosted/pub.dev/flutter_lints-5.0.0/
@@ -123,9 +123,9 @@ http_parser
 file:///home/kavia/.pub-cache/hosted/pub.dev/http_parser-4.1.2/
 file:///home/kavia/.pub-cache/hosted/pub.dev/http_parser-4.1.2/lib/
 intl
-3.0
-file:///home/kavia/.pub-cache/hosted/pub.dev/intl-0.19.0/
-file:///home/kavia/.pub-cache/hosted/pub.dev/intl-0.19.0/lib/
+3.3
+file:///home/kavia/.pub-cache/hosted/pub.dev/intl-0.20.2/
+file:///home/kavia/.pub-cache/hosted/pub.dev/intl-0.20.2/lib/
 io
 3.4
 file:///home/kavia/.pub-cache/hosted/pub.dev/io-1.0.5/
